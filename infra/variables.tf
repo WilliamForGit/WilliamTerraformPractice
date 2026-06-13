@@ -25,3 +25,10 @@ variable "common_tags" {
     owner      = "William"
   }
 }
+
+variable "postgres_admin_password" {
+  description = "PostgreSQL admin password (must meet Azure complexity rules)"
+  type        = string
+  sensitive   = true
+}
+
