@@ -51,7 +51,7 @@ resource "azurerm_servicebus_queue" "orders" {
   namespace_id = azurerm_servicebus_namespace.main.id
 
   max_size_in_megabytes = 1024
-  default_message_ttl   = "P14D"  # 14 days
+  default_message_ttl   = "P14D" # 14 days
 }
 
 resource "azurerm_servicebus_queue" "notifications" {
