@@ -48,3 +48,18 @@ output "servicebus_namespace_endpoint" {
   description = "Service Bus namespace endpoint for SDK config"
   value       = azurerm_servicebus_namespace.main.endpoint
 }
+
+output "ingress_namespace" {
+  description = "Namespace where NGINX ingress controller runs"
+  value       = kubernetes_namespace.ingress_nginx.metadata[0].name
+}
+
+output "cert_manager_namespace" {
+  description = "Namespace where cert-manager runs"
+  value       = kubernetes_namespace.cert_manager.metadata[0].name
+}
+
+output "kubectl_get_ingress_ip_command" {
+  description = "Command to get the public IP of the ingress controller"
+  value       = "kubectl get svc -n ${kubernetes_namespace.ingress_nginx.metadata[0].name} ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}'"
+}
