@@ -28,6 +28,19 @@ resource "helm_release" "ingress_nginx" {
       name  = "controller.admissionWebhooks.enabled"
       value = "true"
     },
+    # Tell Azure LB to use TCP probes (not HTTP) to check node health.
+    # HTTP probes default to GET / which NGINX returns 404 on, causing the
+    # probe to fail and the LB to mark nodes unhealthy.
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-protocol"
+      value = "tcp"
+    },
+    # Keep externalTrafficPolicy at Cluster (which is the default) — this means
+    # traffic is distributed across all nodes regardless of which has the pod.
+    {
+      name  = "controller.service.externalTrafficPolicy"
+      value = "Cluster"
+    },
   ]
 
   depends_on = [
