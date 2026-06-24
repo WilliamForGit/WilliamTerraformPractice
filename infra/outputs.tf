@@ -63,3 +63,8 @@ output "kubectl_get_ingress_ip_command" {
   description = "Command to get the public IP of the ingress controller"
   value       = "kubectl get svc -n ${kubernetes_namespace.ingress_nginx.metadata[0].name} ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}'"
 }
+
+output "ingress_static_ip" {
+  description = "Static public IP for NGINX Ingress (use this for DNS A records)"
+  value       = azurerm_public_ip.ingress.ip_address
+}
